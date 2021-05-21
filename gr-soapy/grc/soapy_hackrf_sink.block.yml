@@ -30,20 +30,20 @@ parameters:
     hide: part
 
   - id: center_freq
-    label: 'Center Freq (Hz)'
+    label: Center Freq (Hz)
     category: RF Options
     dtype: real
     default: freq
 
   - id: amp
-    label: 'Amp On (+14 dB)'
+    label: Amp On (+14 dB)
     category: RF Options
     dtype: bool
     default: 'False'
     hide: part
 
   - id: vga
-    label: VGA Gain (0dB - 47dB)'
+    label: VGA Gain (0dB - 47dB)
     category: RF Options
     dtype: real
     default: '16'

@@ -30,13 +30,13 @@ parameters:
     hide: part
 
   - id: center_freq
-    label: 'Center Freq (Hz)'
+    label: Center Freq (Hz)
     category: RF Options
     dtype: real
     default: freq
 
   - id: gain
-    label: 'RF Gain (0dB - 89dB)'
+    label: RF Gain (0dB - 89dB)
     category: RF Options
     dtype: real
     default: '20'

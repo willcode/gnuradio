@@ -40,62 +40,62 @@ parameters:
 
   # Channel 0
   - id: tune_args0
-    label: 'Ch0: Tune arguments'
+    label: Ch0: Tune arguments
     category: RF Options
     dtype: string
     default: ''
     hide: part
 
   - id: settings0
-    label: 'Ch0: Other settings'
+    label: Ch0: Other settings
     category: RF Options
     dtype: string
     default: ''
     hide: part
 
   - id: bandwidth0
-    label: 'Ch0: Bandwidth (Hz)'
+    label: Ch0: Bandwidth (Hz)
     category: RF Options
     dtype: real
     default: '0'
     hide: part
 
   - id: antenna0
-    label: 'Ch0: Antenna'
+    label: Ch0: Antenna
     category: RF Options
     dtype: string
     default: 'TX'
     hide: part
 
   - id: center_freq0
-    label: 'Ch0: Center Freq (Hz)'
+    label: Ch0: Center Freq (Hz)
     category: RF Options
     dtype: real
     default: freq
 
   - id: freq_correction0
-    label: 'Ch0: Frequency Correction'
+    label: Ch0: Frequency Correction
     category: RF Options
     dtype: real
     default: '0'
     hide: part
 
   - id: gain0
-    label: 'Ch0: Overall Gain Value'
+    label: Ch0: Overall Gain Value
     category: RF Options
     dtype: real
     default: '10'
     hide: part
 
   - id: dc_offset0
-    label: 'Ch0: DC Offset'
+    label: Ch0: DC Offset
     category: RF Options
     dtype: complex
     default: '0'
     hide: part
 
   - id: iq_balance0
-    label: 'Ch0: IQ Balance Correction'
+    label: Ch0: IQ Balance Correction
     category: RF Options
     dtype: complex
     default: '0'
@@ -103,63 +103,63 @@ parameters:
 
   # Channel 1
   - id: tune_args1
-    label: 'Ch1: Tune arguments'
+    label: Ch1: Tune arguments
     category: RF Options
     dtype: string
     default: ''
     hide: ${ 'part' if nchan > 1 else 'all' }
 
   - id: settings1
-    label: 'Ch1: Other settings'
+    label: Ch1: Other settings
     category: RF Options
     dtype: string
     default: ''
     hide: ${ 'part' if nchan > 1 else 'all' }
 
   - id: bandwidth1
-    label: 'Ch1: Bandwidth (Hz)'
+    label: Ch1: Bandwidth (Hz)
     category: RF Options
     dtype: real
     default: '0'
     hide: ${ 'part' if nchan > 1 else 'all' }
 
   - id: antenna1
-    label: 'Ch1: Antenna'
+    label: Ch1: Antenna
     category: RF Options
     dtype: string
     default: 'TX'
     hide: ${ 'part' if nchan > 1 else 'all' }
 
   - id: center_freq1
-    label: 'Ch1: Center Freq (Hz)'
+    label: Ch1: Center Freq (Hz)
     category: RF Options
     dtype: real
     default: freq
     hide: ${ 'none' if nchan > 1 else 'all' }
 
   - id: freq_correction1
-    label: 'Ch1: Frequency Correction'
+    label: Ch1: Frequency Correction
     category: RF Options
     dtype: real
     default: '0'
     hide: ${ 'part' if nchan > 1 else 'all' }
 
   - id: gain1
-    label: 'Ch1: Overall Gain Value'
+    label: Ch1: Overall Gain Value
     category: RF Options
     dtype: real
     default: '10'
     hide: ${ 'part' if nchan > 1 else 'all' }
 
   - id: dc_offset1
-    label: 'Ch1: DC Offset'
+    label: Ch1: DC Offset
     category: RF Options
     dtype: complex
     default: '0'
     hide: ${ 'part' if nchan > 1 else 'all' }
 
   - id: iq_balance1
-    label: 'Ch1: IQ Balance Correction'
+    label: Ch1: IQ Balance Correction
     category: RF Options
     dtype: complex
     default: '0'

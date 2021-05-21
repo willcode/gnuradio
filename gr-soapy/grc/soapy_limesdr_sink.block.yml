@@ -30,20 +30,20 @@ parameters:
     hide: part
 
   - id: center_freq
-    label: 'Center Freq (Hz)'
+    label: Center Freq (Hz)
     category: RF Options
     dtype: real
     default: freq
 
   - id: freq_correction
-    label: 'Frequency Correction (PPM)'
+    label: Frequency Correction (PPM)
     category: RF Options
     dtype: real
     default: '0'
     hide: part
 
   - id: gain
-    label: 'RF Gain (-12dB - 64dB)'
+    label: RF Gain (-12dB - 64dB)
     category: RF Options
     dtype: real
     default: '20.0'

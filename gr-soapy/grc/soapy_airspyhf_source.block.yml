@@ -23,34 +23,34 @@ parameters:
     default: samp_rate
 
   - id: center_freq
-    label: 'Center Freq (Hz)'
+    label: Center Freq (Hz)
     category: RF Options
     dtype: real
     default: freq
 
   - id: freq_correction
-    label: 'Frequency Correction (PPM)'
+    label: Frequency Correction (PPM)
     category: RF Options
     dtype: real
     default: '0'
     hide: part
 
   - id: agc
-    label: 'AGC'
+    label: AGC
     category: RF Options
     dtype: bool
     default: 'False'
     hide: part
 
   - id: gain
-    label: 'RF Gain (-48dB - 0dB)'
+    label: RF Gain (-48dB - 0dB)
     category: RF Options
     dtype: real
     default: '-24'
     hide: ${'all' if agc else 'part'}
 
   - id: lna
-    label: 'LNA On (+6 dB)'
+    label: LNA On (+6 dB)
     category: RF Options
     dtype: bool
     default: 'False'

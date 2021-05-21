@@ -30,20 +30,20 @@ parameters:
     hide: part
 
   - id: center_freq
-    label: 'Center Freq (Hz)'
+    label: Center Freq (Hz)
     category: RF Options
     dtype: real
     default: freq
 
   - id: agc
-    label: 'AGC'
+    label: AGC
     category: RF Options
     dtype: bool
     default: 'False'
-    hide: 'part'
+    hide: part
 
   - id: gain
-    label: 'RF Gain (0dB - 73dB)'
+    label: RF Gain (0dB - 73dB)
     category: RF Options
     dtype: real
     default: '20'
