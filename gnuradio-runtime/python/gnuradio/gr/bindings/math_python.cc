@@ -13,8 +13,8 @@
 /* If manual edits are made, the following tags should be modified accordingly.    */
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
-/* BINDTOOL_HEADER_FILE(math.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(85ba2e8e7191733cc35f70005e2d99e9)                     */
+/* BINDTOOL_HEADER_FILE(math.h)                                                    */
+/* BINDTOOL_HEADER_FILE_HASH(24404442055a81491b279f7469d42b99)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -53,6 +53,13 @@ void bind_math(py::module& m)
           (float (*)(gr_complex)) & ::gr::fast_atan2f,
           py::arg("z"),
           D(fast_atan2f, 1));
+
+
+    m.def("nyquist_fold",
+          (int64_t(*)(int64_t, int64_t)) & ::gr::nyquist_fold,
+          py::arg("f"),
+          py::arg("f_s"),
+          D(nyquist_fold));
 
 
     m.def("branchless_clip",
