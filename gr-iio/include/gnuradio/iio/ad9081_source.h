@@ -29,18 +29,12 @@ namespace iio {
  * cards. However, it should support any AD9081 based device using the IIO
  * driver.
  */
-class IIO_API ad9081_source : virtual public gr::hier_block2
+class IIO_API ad9081_source : virtual public gr::sync_block
 {
 public:
     typedef std::shared_ptr<ad9081_source> sptr;
 
     static constexpr int MAX_CHANNEL_COUNT = 8;
-
-private:
-    typedef std::shared_ptr<gr::sync_block> sync_sptr;
-    sync_sptr d_ad9081_block;
-
-    ad9081_source(const std::array<bool, MAX_CHANNEL_COUNT>& en, sync_sptr src_block);
 
 public:
     /*!
@@ -51,7 +45,7 @@ public:
      *              enabled channels
      */
     static sptr make(const std::string& uri,
-                     std::array<bool, MAX_CHANNEL_COUNT> en,
+                     const std::array<bool, MAX_CHANNEL_COUNT>& en,
                      size_t buffer_size);
 
     /*!

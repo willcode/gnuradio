@@ -43,7 +43,7 @@ struct ad9081_channel_state {
     }
 };
 
-class ad9081_block_impl
+class ad9081_common
 {
 public:
     static constexpr int MAX_CHANNEL_COUNT = 8;
@@ -88,8 +88,9 @@ public:
 
 inline constexpr int64_t phase_fold(float x)
 {
-    return (int64_t)(
-        1000LL * (x - static_cast<int64_t>(std::floor((x + 180.0f) / 360.0f)) * 360.0f));
+    return (
+        int64_t)(1000LL *
+                 (x - static_cast<int64_t>(std::floor((x + 180.0f) / 360.0f)) * 360.0f));
 }
 
 void parse_datapath(ad9081_channel_state& st);

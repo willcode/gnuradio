@@ -14,8 +14,6 @@
 
 #include "ad9081_source_impl.h"
 
-#include <gnuradio/blocks/float_to_complex.h>
-#include <gnuradio/blocks/short_to_float.h>
 #include <gnuradio/io_signature.h>
 
 #include <array>
@@ -26,81 +24,23 @@
 namespace gr {
 namespace iio {
 
-ad9081_source::ad9081_source(const std::array<bool, MAX_CHANNEL_COUNT>& en,
-                             sync_sptr src_block)
-    : hier_block2("ad9081_source",
-                  gr::io_signature::make(0, 0, 0),
-                  gr::io_signature::make(
-                      get_channel_count(en), get_channel_count(en), sizeof(gr_complex))),
-      d_ad9081_block(src_block)
-{
-    auto hier = self();
-    int n = get_channel_count(en);
-
-    for (int i = 0; i < n; i++) {
-        auto s2f1 = gr::blocks::short_to_float::make(1, 8192.0f);
-        auto s2f2 = gr::blocks::short_to_float::make(1, 8192.0f);
-        auto f2c = gr::blocks::float_to_complex::make(1);
-
-        connect(d_ad9081_block, i * 2, s2f1, 0);
-        connect(d_ad9081_block, i * 2 + 1, s2f2, 0);
-        connect(s2f1, 0, f2c, 0);
-        connect(s2f2, 0, f2c, 1);
-        connect(f2c, 0, hier, i);
-    }
-}
-
-void ad9081_source::set_main_nco_freq(int nco, int64_t freq)
-{
-    std::dynamic_pointer_cast<ad9081_source_impl>(d_ad9081_block)
-        ->set_main_nco_freq(nco, freq);
-}
-
-void ad9081_source::set_main_nco_phase(int nco, float phase)
-{
-    std::dynamic_pointer_cast<ad9081_source_impl>(d_ad9081_block)
-        ->set_main_nco_phase(nco, phase);
-}
-
-void ad9081_source::set_channel_nco_freq(int nco, int64_t freq)
-{
-    std::dynamic_pointer_cast<ad9081_source_impl>(d_ad9081_block)
-        ->set_channel_nco_freq(nco, freq);
-}
-
-void ad9081_source::set_channel_nco_phase(int nco, float phase)
-{
-    std::dynamic_pointer_cast<ad9081_source_impl>(d_ad9081_block)
-        ->set_channel_nco_phase(nco, phase);
-}
-
-void ad9081_source::set_nyquist_zone(bool odd)
-{
-    std::dynamic_pointer_cast<ad9081_source_impl>(d_ad9081_block)->set_nyquist_zone(odd);
-}
-
-void ad9081_source::set_filter_source_file(const std::string& src_file)
-{
-    std::dynamic_pointer_cast<ad9081_source_impl>(d_ad9081_block)
-        ->set_filter_source_file(src_file);
-}
-
 ad9081_source::sptr ad9081_source::make(const std::string& uri,
-                                        std::array<bool, MAX_CHANNEL_COUNT> en,
+                                        const std::array<bool, MAX_CHANNEL_COUNT>& en,
                                         size_t buffer_size)
 {
-    auto block = gnuradio::get_initial_sptr(
-        new ad9081_source_impl(device_source_impl::get_context(uri), en, buffer_size));
-
-    return gnuradio::get_initial_sptr(new ad9081_source(en, block));
+    return gnuradio::make_block_sptr<ad9081_source_impl>(
+        // TODO: move get_context() from device_source_impl to a common location
+        device_source_impl::get_context(uri),
+        en,
+        buffer_size);
 }
 
 ad9081_source_impl::ad9081_source_impl(struct iio_context* ctx,
-                                       std::array<bool, MAX_CHANNEL_COUNT> en,
+                                       const std::array<bool, MAX_CHANNEL_COUNT>& en,
                                        size_t buffer_size)
     : gr::sync_block("ad9081_source",
                      gr::io_signature::make(0, 0, 0),
-                     gr::io_signature::make(1, -1, sizeof(int16_t))),
+                     gr::io_signature::make(1, -1, sizeof(gr_complex))),
       device_source_impl(ctx,
                          destroy_ctx,
                          "axi-ad9081-rx-hpc",

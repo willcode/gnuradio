@@ -11,7 +11,7 @@
 #ifndef INCLUDED_IIO_AD9081_SOURCE_IMPL_H
 #define INCLUDED_IIO_AD9081_SOURCE_IMPL_H
 
-#include "ad9081_block_impl.h"
+#include "ad9081_common.h"
 #include "device_source_impl.h"
 
 #include <gnuradio/iio/ad9081_source.h>
@@ -23,14 +23,15 @@
 namespace gr {
 namespace iio {
 
-class ad9081_source_impl : public device_source_impl, public ad9081_block_impl
+class ad9081_source_impl : public ad9081_source,
+                           public device_source_impl,
+                           public ad9081_common
 {
-private:
 public:
     static constexpr int MAX_CHANNEL_COUNT = ad9081_source::MAX_CHANNEL_COUNT;
 
     ad9081_source_impl(struct iio_context* ctx,
-                       std::array<bool, MAX_CHANNEL_COUNT> en,
+                       const std::array<bool, MAX_CHANNEL_COUNT>& en,
                        size_t buffer_size);
 
     ~ad9081_source_impl() = default;

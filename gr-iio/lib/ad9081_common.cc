@@ -12,7 +12,7 @@
 #include "config.h"
 #endif
 
-#include "ad9081_block_impl.h"
+#include "ad9081_common.h"
 
 #include <cmath>
 #include <cstdint>
@@ -33,41 +33,41 @@ void parse_datapath(ad9081_channel_state& st)
     // 0   4      11    17
 
     int value = label[4] - '0';
-    if (!(0 <= value && value < ad9081_block_impl::N_FNCO))
+    if (!(0 <= value && value < ad9081_common::N_FNCO))
         throw std::runtime_error("ad9081: Label parse failure: Invalid channel nco: " +
                                  std::to_string(value));
     st.channel_nco = value;
 
     value = label[11] - '0';
-    if (!(0 <= value && value < ad9081_block_impl::N_CNCO))
+    if (!(0 <= value && value < ad9081_common::N_CNCO))
         throw std::runtime_error("ad9081: Label parse failure: Invalid main nco: " +
                                  std::to_string(value));
     st.main_nco = value;
 
     value = label[17] - '0';
-    if (!(0 <= value && value < ad9081_block_impl::N_CNCO))
+    if (!(0 <= value && value < ad9081_common::N_CNCO))
         throw std::runtime_error("ad9081: Label parse failure: Invalid adc: " +
                                  std::to_string(value));
     st.converter = value;
 }
 
-void ad9081_block_impl::set_main_nco_freq(int nco, int64_t freq)
+void ad9081_common::set_main_nco_freq(int nco, int64_t freq)
 {
     set_nco_attr<N_CNCO>("main_nco_frequency", d_main_ncos, nco, freq);
 }
 
-void ad9081_block_impl::set_main_nco_phase(int nco, float phase)
+void ad9081_common::set_main_nco_phase(int nco, float phase)
 {
     set_nco_attr<N_CNCO>(
         "main_nco_phase", d_main_ncos, nco, phase_fold(180.0f / M_PIf32 * phase));
 }
 
-void ad9081_block_impl::set_channel_nco_freq(int nco, int64_t freq)
+void ad9081_common::set_channel_nco_freq(int nco, int64_t freq)
 {
     set_nco_attr<N_FNCO>("channel_nco_frequency", d_channel_ncos, nco, freq);
 }
 
-void ad9081_block_impl::set_channel_nco_phase(int nco, float phase)
+void ad9081_common::set_channel_nco_phase(int nco, float phase)
 {
     set_nco_attr<N_FNCO>(
         "channel_nco_phase", d_channel_ncos, nco, phase_fold(180.0f / M_PIf32 * phase));

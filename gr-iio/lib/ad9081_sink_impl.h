@@ -11,7 +11,7 @@
 #ifndef INCLUDED_IIO_AD9081_SINK_IMPL_H
 #define INCLUDED_IIO_AD9081_SINK_IMPL_H
 
-#include "ad9081_block_impl.h"
+#include "ad9081_common.h"
 #include "device_sink_impl.h"
 
 #include <gnuradio/iio/ad9081_sink.h>
@@ -23,13 +23,13 @@
 namespace gr {
 namespace iio {
 
-class ad9081_sink_impl : public device_sink_impl, public ad9081_block_impl
+class ad9081_sink_impl : public ad9081_sink, public device_sink_impl, public ad9081_common
 {
 public:
     static constexpr int MAX_CHANNEL_COUNT = ad9081_sink::MAX_CHANNEL_COUNT;
 
     ad9081_sink_impl(struct iio_context* ctx,
-                     std::array<bool, ad9081_block_impl::MAX_CHANNEL_COUNT> en,
+                     const std::array<bool, MAX_CHANNEL_COUNT>& en,
                      size_t buffer_size,
                      bool cyclic = false);
 

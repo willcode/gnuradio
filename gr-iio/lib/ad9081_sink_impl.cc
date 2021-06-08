@@ -15,8 +15,6 @@
 #include "ad9081_sink_impl.h"
 #include "device_source_impl.h"
 
-#include <gnuradio/blocks/complex_to_float.h>
-#include <gnuradio/blocks/float_to_short.h>
 #include <gnuradio/io_signature.h>
 
 #include <array>
@@ -27,71 +25,25 @@
 namespace gr {
 namespace iio {
 
-ad9081_sink::ad9081_sink(const std::array<bool, MAX_CHANNEL_COUNT>& en,
-                         sync_sptr src_block)
-    : hier_block2("ad9081_sink",
-                  gr::io_signature::make(
-                      get_channel_count(en), get_channel_count(en), sizeof(gr_complex)),
-                  gr::io_signature::make(0, 0, 0)),
-      d_ad9081_block(src_block)
-{
-    basic_block_sptr hier = self();
-    int n = get_channel_count(en);
-
-    for (int i = 0; i < n; i++) {
-        auto f2s1 = gr::blocks::float_to_short::make(1, 32768.0f);
-        auto f2s2 = gr::blocks::float_to_short::make(1, 32768.0f);
-        auto c2f = gr::blocks::complex_to_float::make(1);
-
-        connect(hier, i, c2f, 0);
-        connect(c2f, 0, f2s1, 0);
-        connect(c2f, 1, f2s2, 0);
-        connect(f2s1, 0, d_ad9081_block, 2 * i);
-        connect(f2s2, 0, d_ad9081_block, 2 * i + 1);
-    }
-}
-
 ad9081_sink::sptr ad9081_sink::make(const std::string& uri,
-                                    std::array<bool, MAX_CHANNEL_COUNT> en,
+                                    const std::array<bool, MAX_CHANNEL_COUNT>& en,
                                     size_t buffer_size,
                                     bool cyclic)
 {
-    auto block = gnuradio::get_initial_sptr(new ad9081_sink_impl(
-        device_source_impl::get_context(uri), en, buffer_size, cyclic));
-
-    return gnuradio::get_initial_sptr(new ad9081_sink(en, block));
-}
-
-void ad9081_sink::set_main_nco_freq(int nco, int64_t freq)
-{
-    std::dynamic_pointer_cast<ad9081_sink_impl>(d_ad9081_block)
-        ->set_main_nco_freq(nco, freq);
-}
-
-void ad9081_sink::set_main_nco_phase(int nco, float phase)
-{
-    std::dynamic_pointer_cast<ad9081_sink_impl>(d_ad9081_block)
-        ->set_main_nco_phase(nco, phase);
-}
-
-void ad9081_sink::set_channel_nco_freq(int nco, int64_t freq)
-{
-    std::dynamic_pointer_cast<ad9081_sink_impl>(d_ad9081_block)
-        ->set_channel_nco_freq(nco, freq);
-}
-
-void ad9081_sink::set_channel_nco_phase(int nco, float phase)
-{
-    std::dynamic_pointer_cast<ad9081_sink_impl>(d_ad9081_block)
-        ->set_channel_nco_phase(nco, phase);
+    return gnuradio::make_block_sptr<ad9081_sink_impl>(
+        // TODO: move get_context() from device_source_impl to a common location
+        device_source_impl::get_context(uri),
+        en,
+        buffer_size,
+        cyclic);
 }
 
 ad9081_sink_impl::ad9081_sink_impl(struct iio_context* ctx,
-                                   std::array<bool, MAX_CHANNEL_COUNT> en,
+                                   const std::array<bool, MAX_CHANNEL_COUNT>& en,
                                    size_t buffer_size,
                                    bool cyclic)
     : gr::sync_block("ad9081_sink",
-                     gr::io_signature::make(1, -1, sizeof(int16_t)),
+                     gr::io_signature::make(1, -1, sizeof(gr_complex)),
                      gr::io_signature::make(0, 0, 0)),
       device_sink_impl(ctx,
                        destroy_ctx,
