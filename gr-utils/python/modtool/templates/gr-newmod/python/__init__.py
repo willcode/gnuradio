@@ -23,13 +23,25 @@ This is the GNU Radio HOWTO module. Place your Python package
 description here (python/__init__.py).
 '''
 from __future__ import unicode_literals
+import sys
+
+# GNU Radio 3.8 is compatible with both Python 2 and 3,
+# which raise different exceptions if a module is not found.
+is_python2 = sys.version_info[0] == 2
 
 # import swig generated symbols into the howto namespace
-try:
-    # this might fail if the module is python-only
-    from .howto_swig import *
-except ImportError:
-    pass
+if is_python2:
+    try:
+        # this might fail if the module is python-only
+        from .howto_swig import *
+    except ImportError:
+        pass
+else:
+    try:
+        # this might fail if the module is python-only
+        from .howto_swig import *
+    except ModuleNotFoundError:
+        pass
 
 # import any pure python here
 #
