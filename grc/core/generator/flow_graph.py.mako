@@ -26,7 +26,6 @@
 ########################################################
 % if generate_options == 'qt_gui':
 from packaging.version import Version as StrictVersion
-from PyQt5 import Qt
 from gnuradio import qtgui
 %endif
 % for imp in imports:
