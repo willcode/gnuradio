@@ -180,6 +180,12 @@ void QFosphorSurface::setFrequencyRange(const double center_freq, const double s
     d_layout.dirty = true; // FIXME more fine grain refresh
 }
 
+void QFosphorSurface::setDbRange(const float min_db, const float max_db)
+{
+    d_min_db = min_db;
+    d_max_db = max_db;
+}
+
 void QFosphorSurface::setWaterfall(bool enabled)
 {
     d_layout.wf_enabled = enabled;
@@ -515,6 +521,7 @@ void QFosphorSurface::refreshPowerAxis()
     for (i = 0; i < 11; i++) {
         int yv = (int)(d_layout.y[5] - d_layout.y[3] - i * d_layout.y_div);
 
+        QString db_str(TODO);
         snprintf(buf, sizeof(buf) - 1, "%d", (i - 10) * 10);
         buf[sizeof(buf) - 1] = 0;
 

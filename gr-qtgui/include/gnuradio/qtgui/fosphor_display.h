@@ -76,6 +76,7 @@ public:
     /*** Block API ***********************************************************/
     virtual void set_frequency_range(const double center_freq,
                                      const double samp_rate) = 0;
+    virtual void set_db_range(const float min_db, const float max_db) = 0;
     virtual void set_waterfall(bool enabled) = 0;
     virtual void set_grid(bool enabled) = 0;
     virtual void set_palette(const std::string& name) = 0;

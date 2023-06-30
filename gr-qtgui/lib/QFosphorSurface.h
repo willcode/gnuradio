@@ -37,6 +37,7 @@ public:
     ~QFosphorSurface() override;
 
     void setFrequencyRange(const double center_freq, const double span);
+    void setDbRange(const float min_db, const float max_db);
     void setWaterfall(bool enabled);
     void setGrid(bool enabled);
     void setPalette(std::string name);
@@ -60,6 +61,8 @@ private:
     int d_fft_bins;
     int d_pwr_bins;
     int d_wf_lines;
+    float d_min_db;
+    float d_max_db;
 
     bool d_grid_enabled;
     std::string d_palette;

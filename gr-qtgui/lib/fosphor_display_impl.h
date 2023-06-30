@@ -31,6 +31,7 @@ public:
 
     /* Block API */
     void set_frequency_range(const double center_freq, const double samp_rate) override;
+    void set_db_range(const float min_db, const float max_db) override;
     void set_waterfall(bool enabled) override;
     void set_grid(bool enabled) override;
     void set_palette(const std::string& name) override;
@@ -58,6 +59,9 @@ private:
 
     int d_fft_bins;
     int d_pwr_bins;
+
+    float d_min_db = -100.0f;
+    float d_max_db = 0.0f;
 
     double d_center_freq = 0.0;
     double d_samp_rate = 0.0;

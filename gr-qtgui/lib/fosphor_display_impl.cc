@@ -89,6 +89,15 @@ void fosphor_display_impl::set_frequency_range(const double center_freq,
     message_port_pub(pmt::mp("cfg"), msg);
 }
 
+void fosphor_display_impl::set_db_range(const float min_db, const float max_db)
+{
+    // Some arbitrary limits
+    d_min_db = std::clamp(min_db, -180.0f, 30.0f);
+    d_max_db = std::clamp(max_db, d_min_db, 30.0f);
+
+    d_gui->setDbRange(min_db, max_db);
+}
+
 void fosphor_display_impl::set_waterfall(bool enabled) { d_gui->setWaterfall(enabled); }
 
 void fosphor_display_impl::set_grid(bool enabled) { d_gui->setGrid(enabled); }
